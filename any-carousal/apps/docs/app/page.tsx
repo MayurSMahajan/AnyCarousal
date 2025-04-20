@@ -1,28 +1,26 @@
-import { Carousel } from "@any-carousal/react-any-carousel/carousal";
+import { Carousel } from "@any-carousal/react-any-carousel/carousel";
 
 export default function Home() {
   return (
     <div>
       <h1>Test Carousel</h1>
       <Carousel>
-        {[1, 2, 3, 4].map((num) => (
-          <div
-            key={num}
-            style={{
-              scrollSnapAlign: "start",
-              flex: "0 0 auto",
-              width: "200px",
-              height: "150px",
-              background: "#eee",
-              margin: "0 10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Slide {num}
-          </div>
-        ))}
+       {[...Array(10)].map((_, i) => (
+        <div
+          key={i}
+          style={{
+            height: 150,
+            width: 150,
+            background: '#ddd',
+            borderRadius: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {i + 1}
+        </div>
+      ))}
       </Carousel>
     </div>
   );

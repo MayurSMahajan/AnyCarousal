@@ -1,0 +1,34 @@
+/* packages/react-any-carousel/src/react-any-carousel.css */
+
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-inline: 1rem; /* 👈 side gutters */
+}
+
+.carousel-container > * {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.nav-button {
+  position: absolute;
+}
+
+.nav-button.left {
+  left: 0;
+}
+
+.nav-button.right {
+  right: 0;
+  rotate: 180deg;
+}
