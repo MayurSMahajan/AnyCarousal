@@ -1,17 +1,22 @@
 "use client";
 
 import React from "react";
+import { Theme } from "./carousel-props";
 
 type CircularButtonProps = {
-  onClick: () => void;
-  icon: React.ReactNode;
   className?: string;
+  icon: React.ReactNode;
+  theme?: Theme;
+  style?: React.CSSProperties;
+  onClick: () => void;
 };
 
 export const CircularButton = ({
   onClick,
   icon,
   className = "",
+  theme = 'light',
+  style = {}
 }: CircularButtonProps) => {
   return (
     <button
@@ -21,23 +26,19 @@ export const CircularButton = ({
         borderRadius: "50%",
         width: "45px",
         height: "45px",
-        display: "grid",
-        placeItems: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
         border: "none",
-        background: "white",
-        color: "black",
+        backgroundColor: theme == 'light' ?  "white" : "black",
+        color: theme == 'dark' ?  "white" : "black",
         fontSize: "1.75rem",
         cursor: "pointer",
+        ...style
       }}
     >
-      <p
-        style={{
-          transform: "translateY(-7.5%)",
-        }}
-      >
         {icon}
-      </p>
     </button>
   );
 };

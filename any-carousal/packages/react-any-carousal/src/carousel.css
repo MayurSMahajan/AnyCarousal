@@ -17,7 +17,7 @@
 
 .carousel-container > * {
   flex: 0 0 auto;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
 }
 
 .nav-button {
