@@ -35,10 +35,10 @@
 }
 
 .nav-button.left {
-  left: 0;
+  left: 0.75rem;
 }
 
 .nav-button.right {
-  right: 0;
+  right: 0.75rem;
   rotate: 180deg;
 }
