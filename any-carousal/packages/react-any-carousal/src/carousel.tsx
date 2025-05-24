@@ -10,6 +10,7 @@ const defaultProps = {
   iconColor: "#fff",
   iconBgColor: "#333",
   scrollSnapType: "start" as ScrollSnapOptions,
+  scrollOffset: 200
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
@@ -21,6 +22,7 @@ export const Carousel = (rawProps: CarouselProps) => {
     iconColor,
     iconBgColor,
     scrollSnapType,
+    scrollOffset,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +51,7 @@ export const Carousel = (rawProps: CarouselProps) => {
       {showLeft && (
         <CircularButton
           className="nav-button left"
-          onClick={() => scrollBy(-200)}
+          onClick={() => scrollBy(-1 * scrollOffset)}
           icon={icon}
           style={{ color: iconColor, backgroundColor: iconBgColor }}
           theme={theme}
@@ -66,7 +68,7 @@ export const Carousel = (rawProps: CarouselProps) => {
       {showRight && (
         <CircularButton
           className="nav-button right"
-          onClick={() => scrollBy(200)}
+          onClick={() => scrollBy(scrollOffset)}
           icon={icon}
           style={{ color: iconColor, backgroundColor: iconBgColor }}
           theme={theme}

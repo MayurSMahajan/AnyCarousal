@@ -14,5 +14,6 @@ export type CarouselProps = {
   icon?: ReactNode;
   iconColor?: string;
   iconBgColor?: string;
-  scrollSnapType?: ScrollSnapOptions
+  scrollSnapType?: ScrollSnapOptions,
+  scrollOffset?: number;
 };
