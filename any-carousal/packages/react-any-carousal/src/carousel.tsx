@@ -13,7 +13,6 @@ const defaultProps = {
   } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
   scrollOffset: 200,
-  autoSlideInterval: 3,
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
@@ -24,11 +23,13 @@ export const Carousel = (rawProps: CarouselProps) => {
     iconOptions,
     scrollSnapType,
     scrollOffset,
+    autoSlideInterval,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(autoSlideInterval ? true : false);
 
   const handleScroll = () => {
     if (!containerRef.current) return;
@@ -39,6 +40,7 @@ export const Carousel = (rawProps: CarouselProps) => {
   };
 
   const scrollBy = (offset: number) => {
+    setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
     if (!containerRef.current) return;
     containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
   };
@@ -46,6 +48,21 @@ export const Carousel = (rawProps: CarouselProps) => {
   useEffect(() => {
     handleScroll(); // initial check
   }, []);
+
+
+  useEffect(() => {
+    if (!autoScrollEnabled || !containerRef.current || !autoSlideInterval) return;
+
+    const interval = Number(autoSlideInterval);
+    if (isNaN(interval)) return;
+
+    const intervalId = setInterval(() => {
+      containerRef.current?.scrollBy({ left: scrollOffset, behavior: "smooth" });
+    }, interval);
+
+    return () => clearInterval(intervalId);
+  }, [autoScrollEnabled, autoSlideInterval, scrollOffset]);
+
 
   return (
     <div className="carousel-wrapper">

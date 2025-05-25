@@ -20,7 +20,7 @@ export default function Home() {
           }
         }
         scrollOffset={300}
-        autoSlideInterval={3}
+        autoSlideInterval={2000}
       >
         {largeImageList.map((item, i) => (
           <LargeImageComponent key={i} imageUrl={item.imageUrl} credit={item.credit}></LargeImageComponent>

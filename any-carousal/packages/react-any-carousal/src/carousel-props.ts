@@ -61,7 +61,7 @@ export type CarouselProps = {
   scrollOffset?: number;
 
   /**
-   * If set, then the carousel will scroll after a fixed duration defined by this variable
+   * If set, then the carousel will scroll after a fixed duration defined by this variable.
    * The duration is taken in milliseconds
    */
   autoSlideInterval?: number,
