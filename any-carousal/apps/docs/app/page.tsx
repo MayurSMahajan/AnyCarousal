@@ -27,8 +27,9 @@ export default function Home() {
         ))}
       </Carousel>
       <hr style={{ 'margin': '5rem 0' }}></hr>
-      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Small Custom Items</h1>
-      <Carousel>
+      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Cards</h1>
+      <p style={{ 'marginBottom': '2rem' }}>Customise the scrollOffset property to scroll multiple items at a time</p>
+      <Carousel scrollOffset={4000}>
         {cubDataList.map((cub, i) => (
           <CubInfoCard
             key={i}
@@ -41,13 +42,14 @@ export default function Home() {
         ))}
       </Carousel>
       <hr style={{ 'margin': '5rem 0' }}></hr>
-      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Light custom icon, iconColor, iconBGColor</h1>
+      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with custom iconOptions</h1>
       <Carousel
         iconOptions={{
           icon: < ChevronIcon color="white" />,
           iconColor: "white",
           iconBgColor: "#ffffff45"
         }}
+        scrollOffset={100}
       >
         {[...Array(4)].map((_, i) => (
           <div
