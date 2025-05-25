@@ -13,11 +13,12 @@
   scroll-behavior: smooth;
   gap: 1rem;
   padding-inline: 1rem; /* 👈 side gutters */
+  
+  /* hide the scrollbar */
   -ms-overflow-style: none;
-
-
   overflow: -moz-scrollbars-none;
   scrollbar-width: none;
+
 
   &::-webkit-scrollbar {
     display: none;

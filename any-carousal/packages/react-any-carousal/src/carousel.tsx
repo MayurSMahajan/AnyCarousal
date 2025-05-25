@@ -1,16 +1,19 @@
 "use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
-import { CarouselProps, Theme, ScrollSnapOptions } from "./carousel-props";
+import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
 import "./carousel.css";
 
 const defaultProps = {
   theme: "light" as Theme,
-  icon: <span>&#8249;</span> as ReactNode,
-  iconColor: "#fff",
-  iconBgColor: "#333",
+  iconOptions: {
+    icon: <span>&#8249;</span> as ReactNode,
+    iconColor: "#fff",
+    iconBgColor: "#333",
+  } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
-  scrollOffset: 200
+  scrollOffset: 200,
+  autoSlideInterval: 3,
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
@@ -18,9 +21,7 @@ export const Carousel = (rawProps: CarouselProps) => {
   const {
     children,
     theme,
-    icon,
-    iconColor,
-    iconBgColor,
+    iconOptions,
     scrollSnapType,
     scrollOffset,
   } = props;
@@ -52,8 +53,8 @@ export const Carousel = (rawProps: CarouselProps) => {
         <CircularButton
           className="nav-button left"
           onClick={() => scrollBy(-1 * scrollOffset)}
-          icon={icon}
-          style={{ color: iconColor, backgroundColor: iconBgColor }}
+          icon={iconOptions.icon}
+          style={{ color: iconOptions.iconColor, backgroundColor: iconOptions.iconBgColor }}
           theme={theme}
         />
       )}
@@ -69,8 +70,8 @@ export const Carousel = (rawProps: CarouselProps) => {
         <CircularButton
           className="nav-button right"
           onClick={() => scrollBy(scrollOffset)}
-          icon={icon}
-          style={{ color: iconColor, backgroundColor: iconBgColor }}
+          icon={iconOptions.icon}
+          style={{ color: iconOptions.iconColor, backgroundColor: iconOptions.iconBgColor }}
           theme={theme}
         />
       )}

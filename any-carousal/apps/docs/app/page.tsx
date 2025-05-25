@@ -6,15 +6,21 @@ import { cubDataList } from "./data/cubDataList";
 import { CubInfoCard } from "./components/CubInfoCard";
 
 export default function Home() {
+
   return (
     <div style={{ 'padding': '2rem' }}>
       <h1 style={{ 'marginBottom': '0.5rem' }}>AnyCarousal Example</h1>
       <p style={{ 'marginBottom': '2rem' }}>To move the carousal: press the arrow buttons or slide with two fingers on your touch-pad or hold Shift key and scroll using MouseWheel.</p>
       <Carousel
-        icon={<ChevronIcon color="white" />}
-        iconColor="white"
-        iconBgColor="#00000080"
+        iconOptions={
+          {
+            icon: < ChevronIcon color="white" />,
+            iconBgColor: "#00000080",
+            iconColor: "white"
+          }
+        }
         scrollOffset={300}
+        autoSlideInterval={3}
       >
         {largeImageList.map((item, i) => (
           <LargeImageComponent key={i} imageUrl={item.imageUrl} credit={item.credit}></LargeImageComponent>
@@ -37,9 +43,11 @@ export default function Home() {
       <hr style={{ 'margin': '5rem 0' }}></hr>
       <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Light custom icon, iconColor, iconBGColor</h1>
       <Carousel
-        icon={<ChevronIcon color="white" />}
-        iconColor="white"
-        iconBgColor="#ffffff45"
+        iconOptions={{
+          icon: < ChevronIcon color="white" />,
+          iconColor: "white",
+          iconBgColor: "#ffffff45"
+        }}
       >
         {[...Array(4)].map((_, i) => (
           <div
