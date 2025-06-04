@@ -3,6 +3,7 @@ import { ChevronIcon } from "./components/ChevronIcon";
 import { LargeImageComponent } from "./components/LargeImageComponent";
 import { largeImageList } from "./data/largeImageList";
 import { cubDataList } from "./data/cubDataList";
+import { FaArrowLeft } from "react-icons/fa6";
 import { CubInfoCard } from "./components/CubInfoCard";
 
 export default function Home() {
@@ -15,8 +16,10 @@ export default function Home() {
         iconOptions={
           {
             icon: < ChevronIcon color="white" />,
-            iconBgColor: "#00000080",
-            iconColor: "white"
+            iconStyles: {
+              "backgroundColor": "black",
+              "color": "white",
+            }
           }
         }
         scrollOffset={300}
@@ -29,7 +32,14 @@ export default function Home() {
       <hr style={{ 'margin': '5rem 0' }}></hr>
       <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Cards</h1>
       <p style={{ 'marginBottom': '2rem' }}>Customise the scrollOffset property to scroll multiple items at a time</p>
-      <Carousel scrollOffset={4000}>
+      <Carousel scrollOffset={4000} iconOptions={{
+        icon: <FaArrowLeft style={{ scale: 0.8 }} />,
+        iconStyles: {
+          "backgroundColor": "#ffffff85",
+          "color": "black",
+          "scale": "0.8"
+        },
+      }}>
         {cubDataList.map((cub, i) => (
           <CubInfoCard
             key={i}
@@ -46,8 +56,10 @@ export default function Home() {
       <Carousel
         iconOptions={{
           icon: < ChevronIcon color="white" />,
-          iconColor: "white",
-          iconBgColor: "#ffffff45"
+          iconStyles: {
+            "backgroundColor": "#ffffff45",
+            "color": "white",
+          },
         }}
         scrollOffset={100}
       >
@@ -68,6 +80,7 @@ export default function Home() {
           </div>
         ))}
       </Carousel>
+      <div style={{ 'marginBottom': '5rem' }}></div>
     </div>
   );
 }

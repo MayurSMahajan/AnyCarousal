@@ -14,13 +14,11 @@ export type Theme = "light" | "dark";
 /**
  * Options used for customising navigation icons used in carousel
  * `icon`: A `ReactNode` that is going to be used as the icon element.
- * `iconColor`: The foreground color of the icon.
- * `iconBgColor`: The background color of the icon.
+ * `iconStyles`: A style object that will be passed as styles to the Icon Node
  */
 export type IconOptions = {
   icon?: ReactNode;
-  iconColor?: string;
-  iconBgColor?: string;
+  iconStyles?: any;
 }
 
 export type CarouselProps = {

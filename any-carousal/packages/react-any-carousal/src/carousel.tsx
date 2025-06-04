@@ -8,8 +8,7 @@ const defaultProps = {
   theme: "light" as Theme,
   iconOptions: {
     icon: <span>&#8249;</span> as ReactNode,
-    iconColor: "#fff",
-    iconBgColor: "#333",
+    iconStyles: { color: "whitesmoke", backgroundColor: "#333" },
   } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
   scrollOffset: 200,
@@ -71,7 +70,7 @@ export const Carousel = (rawProps: CarouselProps) => {
           className="nav-button left"
           onClick={() => scrollBy(-1 * scrollOffset)}
           icon={iconOptions.icon}
-          style={{ color: iconOptions.iconColor, backgroundColor: iconOptions.iconBgColor }}
+          style={iconOptions.iconStyles}
           theme={theme}
         />
       )}
@@ -88,7 +87,7 @@ export const Carousel = (rawProps: CarouselProps) => {
           className="nav-button right"
           onClick={() => scrollBy(scrollOffset)}
           icon={iconOptions.icon}
-          style={{ color: iconOptions.iconColor, backgroundColor: iconOptions.iconBgColor }}
+          style={iconOptions.iconStyles}
           theme={theme}
         />
       )}
