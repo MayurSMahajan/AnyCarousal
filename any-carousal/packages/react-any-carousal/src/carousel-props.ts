@@ -62,5 +62,11 @@ export type CarouselProps = {
    * If set, then the carousel will scroll after a fixed duration defined by this variable.
    * The duration is taken in milliseconds
    */
-  autoSlideInterval?: number,
+  autoSlideInterval?: number;
+
+  /**
+   * Easing function used for scrolling the carousel.
+   * Example: 'cubic-bezier(0.25, 1, 0.5, 1)'
+   */
+  scrollEasing?: string; 
 };
