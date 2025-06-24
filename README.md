@@ -11,7 +11,15 @@ AnyCarousel is a carousel component which is powerful, highly adaptable, and cov
 - [x] Shift + Scroll Mouse Wheel supported for desktop devices.
 - [x] Two finger scroll gesture supported for devices with touchpads.
 
-# To run the React Demo:
+## Demo 
+
+https://github.com/user-attachments/assets/75484e1e-6676-419a-b5d1-b49bb4c6420d
+
+---
+
+https://github.com/user-attachments/assets/7d117cc2-bd13-4149-b0ba-612df1bf4c63
+
+## To run the React Demo:
 
 1. Make sure you are in this directory & and then run `npm run dev`
 
