@@ -30,8 +30,10 @@ export default function Home() {
         ))}
       </Carousel>
       <hr style={{ 'margin': '5rem 0' }}></hr>
-      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Cards</h1>
-      <p style={{ 'marginBottom': '2rem' }}>Customise the scrollOffset property to scroll multiple items at a time</p>
+      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with Cards & Customised Nav Icons</h1>
+      <p style={{ 'marginBottom': '0.5rem' }}>Customise the scrollOffset property to scroll multiple items at a time, here `scrollOffset=4000`</p>
+      <p style={{ 'marginBottom': '0.5rem' }}>The iconOptions parameter accpets an instance of `HTMLElement` thus you can pass anything as `iconOptions.icon`, you can directly pass styles to `iconOptions.iconStyles` parameter</p>
+      <p style={{ 'marginBottom': '2rem' }}>In this example, we have not set the `autoSlideInterval` thus it is not scrolling automatically</p>
       <Carousel scrollOffset={4000} iconOptions={{
         icon: <FaArrowLeft style={{ scale: 0.8 }} />,
         iconStyles: {

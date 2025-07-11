@@ -20,6 +20,7 @@ export const CircularButton = ({
 }: CircularButtonProps) => {
   return (
     <button
+      data-testid={`nav-icon-btn`}
       onClick={onClick}
       className={`circular-button ${className}`}
       style={{
@@ -31,14 +32,14 @@ export const CircularButton = ({
         justifyContent: "center",
         boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
         border: "none",
-        backgroundColor: theme == 'light' ?  "white" : "black",
-        color: theme == 'dark' ?  "white" : "black",
+        backgroundColor: theme == 'light' ? "white" : "black",
+        color: theme == 'dark' ? "white" : "black",
         fontSize: "1.75rem",
         cursor: "pointer",
         ...style
       }}
     >
-        {icon}
+      {icon}
     </button>
   );
 };
