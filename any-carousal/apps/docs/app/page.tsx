@@ -22,7 +22,7 @@ export default function Home() {
             }
           }
         }
-        scrollOffset={300}
+        scrollOffset={1000}
         autoSlideInterval={2000}
       >
         {largeImageList.map((item, i) => (

@@ -2,6 +2,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
+import bezierEasing from 'bezier-easing';
 import "./carousel.css";
 
 const defaultProps = {
@@ -11,7 +12,8 @@ const defaultProps = {
     iconStyles: { color: "whitesmoke", backgroundColor: "#333" },
   } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
-  scrollOffset: 200,
+  scrollOffset: 1000,
+  scrollEasing: 'cubic-bezier(0.42, 0, 0.58, 1)',
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
@@ -41,7 +43,14 @@ export const Carousel = (rawProps: CarouselProps) => {
   const scrollBy = (offset: number) => {
     setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
     if (!containerRef.current) return;
-    containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
+    // containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
+
+    // const easing = bezierEasing(0.25, 0.8, 0.5, 1);
+    const parsedEasing = props.scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
+    const [x1, y1, x2, y2] = parsedEasing?.split(',').map(Number) || [0.25, 0.8, 0.5, 1];
+
+    const easing = bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
+    animateScrollBy(containerRef.current, offset, 600, easing);
   };
 
   useEffect(() => {
@@ -62,6 +71,28 @@ export const Carousel = (rawProps: CarouselProps) => {
     return () => clearInterval(intervalId);
   }, [autoScrollEnabled, autoSlideInterval, scrollOffset]);
 
+  function animateScrollBy(
+    container: HTMLDivElement,
+    offset: number,
+    duration: number = 600,
+    easingFn: (t: number) => number
+  ) {
+    const start = container.scrollLeft;
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easingFn(progress);
+      container.scrollLeft = start + offset * easedProgress;
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  }
 
   return (
     <div className="carousel-wrapper">
