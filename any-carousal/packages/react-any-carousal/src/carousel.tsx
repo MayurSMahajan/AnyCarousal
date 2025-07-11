@@ -48,7 +48,7 @@ export const Carousel = (rawProps: CarouselProps) => {
     // const easing = bezierEasing(0.25, 0.8, 0.5, 1);
     const parsedEasing = props.scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
     const [x1, y1, x2, y2] = parsedEasing?.split(',').map(Number) || [0.25, 0.8, 0.5, 1];
-    console.log(`Using easing: ${x1}, ${y1}, ${x2}, ${y2}`);
+
     const easing = bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
     animateScrollBy(containerRef.current, offset, 600, easing);
   };
@@ -79,13 +79,11 @@ export const Carousel = (rawProps: CarouselProps) => {
   ) {
     const start = container.scrollLeft;
     const startTime = performance.now();
-    console.log(`Animating scroll by ${offset}px over ${duration}ms`);
 
     const step = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = easingFn(progress);
-      console.log(`Progress: ${progress}, Eased Progress: ${easedProgress}`);
       container.scrollLeft = start + offset * easedProgress;
 
       if (progress < 1) {
