@@ -8,6 +8,7 @@ AnyCarousel is a carousel component which is powerful, highly adaptable, and cov
 - [x] Customisable Navigation Icons, plus standard nav icons out of the box.
 - [x] Lightweight & Minimalistic.
 - [x] Custom snapping behaviour.
+- [x] Pass custom bezier curve to control scroll animation 
 - [x] Shift + Scroll Mouse Wheel supported for desktop devices.
 - [x] Two finger scroll gesture supported for devices with touchpads.
 
