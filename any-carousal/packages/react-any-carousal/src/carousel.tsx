@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
 import { DEFAULT_DURATION, DEFAULT_EASING, DEFAULT_SCROLL_OFFSET, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
@@ -19,7 +19,7 @@ const defaultProps = {
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
-  const props = mergeProps(defaultProps, rawProps);
+  const props = useMemo(() => mergeProps(defaultProps, rawProps), [rawProps]);
   const {
     children,
     theme,
@@ -35,11 +35,12 @@ export const Carousel = (rawProps: CarouselProps) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(autoSlideInterval ? true : false);
-  const sanitizedDuration =
-    typeof duration === 'number'
+
+  const sanitizedDuration = useMemo(() => {
+    return typeof duration === "number"
       ? Math.min(Math.max(duration, MIN_DURATION), MAX_DURATION)
       : DEFAULT_DURATION;
-
+  }, [duration]);
 
   /**
    * Called when the content is scrolled. 
