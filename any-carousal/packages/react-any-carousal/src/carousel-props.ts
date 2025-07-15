@@ -19,7 +19,7 @@ export type Theme = "light" | "dark";
 export type IconOptions = {
   icon?: ReactNode;
   iconStyles?: any;
-}
+};
 
 export type CarouselProps = {
   /**
@@ -40,19 +40,19 @@ export type CarouselProps = {
 
   /**
    * Determines the snapping type for the carousel
-   * 
-   * Accepted values are `"start" | "center" | "end" | "none"` 
+   *
+   * Accepted values are `"start" | "center" | "end" | "none"`
    * Learn more about snapping here: https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
    */
-  scrollSnapType?: ScrollSnapOptions,
+  scrollSnapType?: ScrollSnapOptions;
 
   /**
-   * An offset of how much the Carousel will scroll its children, 
-   * 
+   * An offset of how much the Carousel will scroll its children,
+   *
    * To scroll each child one at a time, set this to a value closer to the child's width
    * To scroll the entire container, set this value to the container's width
-   * 
-   * If `scrollSnapType` is enabled and `scrollOffset` is less than the child's width, 
+   *
+   * If `scrollSnapType` is enabled and `scrollOffset` is less than the child's width,
    * the carousel will still show the next child
    * according to the `scrollSnapType` value
    */
@@ -66,7 +66,15 @@ export type CarouselProps = {
 
   /**
    * Easing function used for scrolling the carousel.
-   * Example: 'cubic-bezier(0.25, 1, 0.5, 1)'
+   * Example Input: 'cubic-bezier(0.25, 1, 0.5, 1)'
+   * Note that the above easing function is used as the fallback value.
    */
-  scrollEasing?: string; 
+  scrollEasing?: string;
+
+  // TODO: see if we can prevent the user from entering a humongous number
+  /**
+   * Defines how much time each transition between children will take in milliseconds.
+   * Defaults to `600`
+   */
+  duration?: number;
 };

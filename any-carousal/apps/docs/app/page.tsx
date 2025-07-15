@@ -24,6 +24,8 @@ export default function Home() {
         }
         scrollOffset={1000}
         autoSlideInterval={2000}
+        scrollEasing="cubic-bezier(0.68,-0.55,0.27,1.55)"
+        duration={800}
       >
         {largeImageList.map((item, i) => (
           <LargeImageComponent key={i} imageUrl={item.imageUrl} credit={item.credit}></LargeImageComponent>
@@ -54,35 +56,6 @@ export default function Home() {
         ))}
       </Carousel>
       <hr style={{ 'margin': '5rem 0' }}></hr>
-      <h1 style={{ 'marginBottom': '1rem' }}>Carousal with custom iconOptions</h1>
-      <Carousel
-        iconOptions={{
-          icon: < ChevronIcon color="white" />,
-          iconStyles: {
-            "backgroundColor": "#ffffff45",
-            "color": "white",
-          },
-        }}
-        scrollOffset={100}
-      >
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              height: 300,
-              width: 500,
-              background: '#555',
-              borderRadius: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {i + 1}
-          </div>
-        ))}
-      </Carousel>
-      <div style={{ 'marginBottom': '5rem' }}></div>
     </div>
   );
 }

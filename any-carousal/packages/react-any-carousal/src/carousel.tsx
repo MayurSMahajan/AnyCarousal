@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
+import { DEFAULT_DURATION, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
 import bezierEasing from 'bezier-easing';
 import "./carousel.css";
@@ -14,6 +15,7 @@ const defaultProps = {
   scrollSnapType: "start" as ScrollSnapOptions,
   scrollOffset: 1000,
   scrollEasing: 'cubic-bezier(0.42, 0, 0.58, 1)',
+  duration: DEFAULT_DURATION
 };
 
 export const Carousel = (rawProps: CarouselProps) => {
@@ -25,12 +27,19 @@ export const Carousel = (rawProps: CarouselProps) => {
     scrollSnapType,
     scrollOffset,
     autoSlideInterval,
+    scrollEasing,
+    duration,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(autoSlideInterval ? true : false);
+  const sanitizedDuration =
+    typeof duration === 'number'
+      ? Math.min(Math.max(duration, MIN_DURATION), MAX_DURATION)
+      : DEFAULT_DURATION;
+
 
   const handleScroll = () => {
     if (!containerRef.current) return;
@@ -43,14 +52,15 @@ export const Carousel = (rawProps: CarouselProps) => {
   const scrollBy = (offset: number) => {
     setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
     if (!containerRef.current) return;
-    // containerRef.current.scrollBy({ left: offset, behavior: "smooth" });
 
-    // const easing = bezierEasing(0.25, 0.8, 0.5, 1);
-    const parsedEasing = props.scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
-    const [x1, y1, x2, y2] = parsedEasing?.split(',').map(Number) || [0.25, 0.8, 0.5, 1];
+    const fallbackEasing = [0.25, 0.8, 0.5, 1];
+    const parsedEasing = scrollEasing?.match(/cubic-bezier\(([^)]+)\)/)?.[1];
+    const easingValues = parsedEasing?.split(',').map(Number);
 
+    const [x1, y1, x2, y2] = easingValues?.length === 4 ? easingValues : fallbackEasing;
     const easing = bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
-    animateScrollBy(containerRef.current, offset, 600, easing);
+
+    animateScrollBy(containerRef.current, offset, sanitizedDuration, easing);
   };
 
   useEffect(() => {
