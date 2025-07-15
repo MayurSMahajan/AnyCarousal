@@ -24,8 +24,8 @@ export default function Home() {
         }
         scrollOffset={1000}
         autoSlideInterval={2000}
-        scrollEasing="cubic-bezier(0.68,-0.55,0.27,1.55)"
-        duration={800}
+        scrollEasing="cubic-bezier(0.79,0.14,0.15,0.86);"
+        duration={650}
       >
         {largeImageList.map((item, i) => (
           <LargeImageComponent key={i} imageUrl={item.imageUrl} credit={item.credit}></LargeImageComponent>

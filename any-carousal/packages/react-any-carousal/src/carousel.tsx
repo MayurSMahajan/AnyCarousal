@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { CircularButton } from "./CircularButton";
-import { DEFAULT_DURATION, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
+import { DEFAULT_DURATION, DEFAULT_EASING, DEFAULT_SCROLL_OFFSET, MAX_DURATION, MIN_DURATION } from "./constants/carousel";
 import { CarouselProps, Theme, ScrollSnapOptions, IconOptions } from "./carousel-props";
 import bezierEasing from 'bezier-easing';
 import "./carousel.css";
@@ -13,8 +13,8 @@ const defaultProps = {
     iconStyles: { color: "whitesmoke", backgroundColor: "#333" },
   } as IconOptions,
   scrollSnapType: "start" as ScrollSnapOptions,
-  scrollOffset: 1000,
-  scrollEasing: 'cubic-bezier(0.42, 0, 0.58, 1)',
+  scrollOffset: DEFAULT_SCROLL_OFFSET,
+  scrollEasing: DEFAULT_EASING,
   duration: DEFAULT_DURATION
 };
 
@@ -41,6 +41,10 @@ export const Carousel = (rawProps: CarouselProps) => {
       : DEFAULT_DURATION;
 
 
+  /**
+   * Called when the content is scrolled. 
+   * It handles the logic to show or hide left/right scroll icons.
+   */
   const handleScroll = () => {
     if (!containerRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
@@ -49,7 +53,12 @@ export const Carousel = (rawProps: CarouselProps) => {
     setShowRight(scrollLeft + clientWidth < scrollWidth - 1);
   };
 
-  const scrollBy = (offset: number) => {
+  /**
+   * Explicitly trigger scrolling on the carousel
+   * @param direction = `-1` denotes scrolling backwards, `1` denotes scrolling to forwards
+   * @returns 
+   */
+  const triggerScroll = (direction: number) => {
     setAutoScrollEnabled(false); // Stop auto-scrolling on user interaction
     if (!containerRef.current) return;
 
@@ -60,13 +69,33 @@ export const Carousel = (rawProps: CarouselProps) => {
     const [x1, y1, x2, y2] = easingValues?.length === 4 ? easingValues : fallbackEasing;
     const easing = bezierEasing(x1 ?? 0.25, y1 ?? 0.8, x2 ?? 0.5, y2 ?? 1);
 
-    animateScrollBy(containerRef.current, offset, sanitizedDuration, easing);
+    animateScrollBy(containerRef.current, (scrollOffset * direction), sanitizedDuration, easing);
+  };
+
+  const animateScrollBy = (
+    container: HTMLDivElement,
+    offset: number,
+    duration: number,
+    easingFn: (t: number) => number
+  ) => {
+    const start = container.scrollLeft;
+    const startTime = performance.now();
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easingFn(progress);
+      container.scrollLeft = start + offset * eased;
+
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
   };
 
   useEffect(() => {
     handleScroll(); // initial check
   }, []);
-
 
   useEffect(() => {
     if (!autoScrollEnabled || !containerRef.current || !autoSlideInterval) return;
@@ -81,35 +110,12 @@ export const Carousel = (rawProps: CarouselProps) => {
     return () => clearInterval(intervalId);
   }, [autoScrollEnabled, autoSlideInterval, scrollOffset]);
 
-  function animateScrollBy(
-    container: HTMLDivElement,
-    offset: number,
-    duration: number = 600,
-    easingFn: (t: number) => number
-  ) {
-    const start = container.scrollLeft;
-    const startTime = performance.now();
-
-    const step = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easingFn(progress);
-      container.scrollLeft = start + offset * easedProgress;
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
-  }
-
   return (
     <div className="carousel-wrapper">
       {showLeft && (
         <CircularButton
           className="nav-button left"
-          onClick={() => scrollBy(-1 * scrollOffset)}
+          onClick={() => triggerScroll(-1)}
           icon={iconOptions.icon}
           style={iconOptions.iconStyles}
           theme={theme}
@@ -126,7 +132,7 @@ export const Carousel = (rawProps: CarouselProps) => {
       {showRight && (
         <CircularButton
           className="nav-button right"
-          onClick={() => scrollBy(scrollOffset)}
+          onClick={() => triggerScroll(1)}
           icon={iconOptions.icon}
           style={iconOptions.iconStyles}
           theme={theme}
@@ -135,6 +141,8 @@ export const Carousel = (rawProps: CarouselProps) => {
     </div>
   );
 };
+
+Carousel.displayName = "Carousel";
 
 /**
  * Utility method for merging props together, this method allows us to override default 
